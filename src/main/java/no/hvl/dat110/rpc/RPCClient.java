@@ -20,7 +20,7 @@ public class RPCClient {
 		
 		// TODO - START
 		// connect using the RPC client
-		
+		//dette er en test på push og pull
 		if (true)
 			throw new UnsupportedOperationException(TODO.method());
 		
