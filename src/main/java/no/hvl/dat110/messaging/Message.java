@@ -21,7 +21,6 @@ public class Message {
 
 		this.data = data;
 
-
 /*		if (true)
 			throw new UnsupportedOperationException(TODO.constructor("Message"));*/
 
