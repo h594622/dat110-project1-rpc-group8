@@ -46,7 +46,7 @@ public class MessageUtils {
 		if (segment == null || segment.length > SEGMENTSIZE)
 			throw new UnsupportedOperationException("Ugyldig");
 
-		byte[] data = new byte[SEGMENTSIZE - 1];
+		byte[] data = new byte[segment[0]];
 
 		for(int i = 0; i < data.length; i++){
 			data[i] = segment[i+1];

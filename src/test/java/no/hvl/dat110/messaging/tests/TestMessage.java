@@ -44,24 +44,24 @@ class TestMessage {
 		
 	@Test
 	void testDecapsulate() {
-		
+
 		byte[] encoded = new byte[MessageUtils.SEGMENTSIZE];
-		
+
 		encoded[0] = 5;
 		encoded[1] = 1;
 		encoded[2] = 2;
 		encoded[3] = 3;
 		encoded[4] = 4;
 		encoded[5] = 5;
-		
+
 		Message message = MessageUtils.decapsulate(encoded);
-		
+
 		byte[] data = message.getData();
-		
-		assertEquals(5,data.length);
-		
-		for (int i = 0;i<5;i++) {
-			assertEquals(encoded[i+1],data[i]);
+
+		assertEquals(5, data.length);
+
+		for (int i = 0; i < 5; i++) {
+			assertEquals(encoded[i + 1], data[i]);
 		}
 	}
 

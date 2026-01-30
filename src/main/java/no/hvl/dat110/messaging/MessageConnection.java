@@ -8,7 +8,6 @@ import java.net.Socket;
 
 import no.hvl.dat110.TODO;
 
-
 public class MessageConnection {
 
 	private DataOutputStream outStream; // for writing bytes to the underlying TCP connection
