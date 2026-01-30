@@ -31,17 +31,26 @@ public class MessageConnection {
 		}
 	}
 
-	public void send(Message message) {
+	public void send(Message message) throws IOException {
 
 		byte[] data;
-		
+
 		// TODO - START
 		// encapsulate the data contained in the Message and write to the output stream
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-			
-		// TODO - END
+		data = message.getData();
+		if (data == null ||  data.length > 127)
+			throw new UnsupportedOperationException("Ugyldig");
+
+		byte[] segment = MessageUtils.encapsulate(message);
+
+        try {
+            outStream.write(segment);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+		outStream.flush();
+
+        // TODO - END
 
 	}
 
@@ -52,10 +61,18 @@ public class MessageConnection {
 		
 		// TODO - START
 		// read a segment from the input stream and decapsulate data into a Message
-		
-		if (true)
+
+        try {
+            data = inStream.readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (data == null || data.length > 127)
 			throw new UnsupportedOperationException(TODO.method());
-		
+
+		message = new Message(data);
+
 		// TODO - END
 		
 		return message;

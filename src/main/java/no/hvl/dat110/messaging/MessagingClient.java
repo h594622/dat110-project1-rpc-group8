@@ -1,6 +1,7 @@
 package no.hvl.dat110.messaging;
 
 
+import java.io.IOException;
 import java.net.Socket;
 
 import no.hvl.dat110.TODO;
@@ -19,7 +20,7 @@ public class MessagingClient {
 	}
 	
 	// setup of a messaging connection to a messaging server
-	public MessageConnection connect () {
+	public MessageConnection connect () throws IOException {
 
 		// client-side socket for underlying TCP connection to messaging server
 		Socket clientSocket;
@@ -29,10 +30,24 @@ public class MessagingClient {
 		// TODO - START
 		// connect to messaging server using a TCP socket
 		// create and return a corresponding messaging connection
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+
+        try {
+            clientSocket = new Socket(server, port);
+        } catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		if (clientSocket == null)
+			throw new UnsupportedOperationException("Socket ikkje oppretta");
+
+		if (!clientSocket.isConnected())
+			throw new UnsupportedOperationException("Klarte ikkje å kople til server");
+
+		connection = new MessageConnection(clientSocket);
+
+		if (connection == null)
+			throw new UnsupportedOperationException("Meldingstilkopling ikkje oppretta");
+
 		// TODO - END
 		return connection;
 	}
