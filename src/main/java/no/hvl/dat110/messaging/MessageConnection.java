@@ -32,7 +32,7 @@ public class MessageConnection {
 	}
 
 	public void send(Message message) throws IOException {
-
+		System.out.println("Sendar...");
 		byte[] data;
 
 		// TODO - START
@@ -55,23 +55,26 @@ public class MessageConnection {
 	}
 
 	public Message receive() {
-
+		System.out.println("Tek imot...");
 		Message message = null;
 		byte[] data;
 		
 		// TODO - START
 		// read a segment from the input stream and decapsulate data into a Message
 
-        try {
-            data = inStream.readAllBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+		try {
+			// lag array med fast storleik SEGMENTSIZE
+			byte[] segment = new byte[MessageUtils.SEGMENTSIZE];
 
-        if (data == null || data.length > 127)
-			throw new UnsupportedOperationException(TODO.method());
+			// les éin heil segment frå straumen
+			inStream.read(segment);
 
-		message = new Message(data);
+			// hent Message med decapsulate
+			message = MessageUtils.decapsulate(segment);
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
 		// TODO - END
 		

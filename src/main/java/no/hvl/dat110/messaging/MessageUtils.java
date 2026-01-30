@@ -1,5 +1,6 @@
 package no.hvl.dat110.messaging;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import no.hvl.dat110.TODO;
@@ -27,9 +28,10 @@ public class MessageUtils {
 		segment = new byte[SEGMENTSIZE];
 		segment[0] = (byte) data.length;
 
-		for(int i = 1; i < data.length; i++){
+		for(int i = 0; i < data.length; i++){
 			segment[i+1] = data[i];
 		}
+
 
 		// TODO - END
 		return segment;
@@ -42,17 +44,19 @@ public class MessageUtils {
 		
 		// TODO - START
 		// decapsulate segment and put received payload data into a message
-
 		if (segment == null || segment.length > SEGMENTSIZE)
 			throw new UnsupportedOperationException("Ugyldig");
 
+		// første byte i segmentet er lengda på data
 		byte[] data = new byte[segment[0]];
 
-		for(int i = 0; i < data.length; i++){
-			data[i] = segment[i+1];
+		// kopier data frå segment[1] og framover
+		for (int i = 0; i < data.length; i++) {
+			data[i] = segment[i + 1];
 		}
 
 		message = new Message(data);
+
 
 		// TODO - END
 		
