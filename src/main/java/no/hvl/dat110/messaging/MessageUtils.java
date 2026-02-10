@@ -27,9 +27,6 @@ public class MessageUtils {
 
 		System.arraycopy(data, 0, segment, 1, data.length);
 
-/*		if (true)
-			throw new UnsupportedOperationException(TODO.method()); */
-
 		// TODO - END
 
 		return segment;
@@ -51,9 +48,6 @@ public class MessageUtils {
 
 		message = new Message(data);
 
-/*		if (true)
-			throw new UnsupportedOperationException(TODO.method()); */
-		
 		// TODO - END
 		
 		return message;
