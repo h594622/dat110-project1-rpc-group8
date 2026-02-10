@@ -39,12 +39,16 @@ public class Controller  {
 		try {
 			displayclient.connect();
 			sensorclient.connect();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 
-		int value = sensor.read();
-		display.write("Value: " + value);
+			for (int i = 0; i < N; i++) {
+				double value = sensor.read();
+				int rounded = (int) Math.round(value);
+				display.write(String.valueOf(rounded));
+				Thread.sleep(1000);
+			}
+		}  catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		// TODO - END
 		
