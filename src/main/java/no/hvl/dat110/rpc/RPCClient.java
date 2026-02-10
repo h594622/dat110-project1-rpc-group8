@@ -61,17 +61,17 @@ public class RPCClient {
 
 
 		try {
-			byte[] hente = RPCUtils.encapsulate(rpcid, param);
-			Message melding = new Message(hente);
+			byte[] recieve = RPCUtils.encapsulate(rpcid, param);
+			Message melding = new Message(recieve);
 			connection.send(melding);
 
 			if (connection == null) {
 				throw new IllegalStateException("Not connected");
 			}
 
-			Message svar = connection.receive();
+			Message answer = connection.receive();
 
-			returnval = RPCUtils.decapsulate(svar.getData());
+			returnval = RPCUtils.decapsulate(answer.getData());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
