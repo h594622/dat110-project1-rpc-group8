@@ -1,6 +1,7 @@
 package no.hvl.dat110.rpc;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import no.hvl.dat110.TODO;
 
@@ -14,9 +15,16 @@ public class RPCUtils {
 		
 		// Encapsulate the rpcid and payload in a byte array according to the RPC message syntax / format
 		
-		if (true)
+		if (payload == null)
 			throw new UnsupportedOperationException(TODO.method());
-		
+
+		rpcmsg = new byte[payload.length + 1];
+		rpcmsg[0] = rpcid;
+
+		for(int i = 0; i < payload.length; i++){
+			rpcmsg[i+1] = payload[i];
+		}
+
 		// TODO - END
 		
 		return rpcmsg;
@@ -30,9 +38,15 @@ public class RPCUtils {
 		
 		// Decapsulate the rpcid and payload in a byte array according to the RPC message syntax
 		
-		if (true)
+		if (rpcmsg == null)
 			throw new UnsupportedOperationException(TODO.method());
-		
+
+		payload = new byte[rpcmsg.length - 1];
+
+		for(int i = 1; i < rpcmsg.length; i++){
+			payload[i-1] = rpcmsg[i];
+		}
+
 		// TODO - END
 		
 		return payload;
@@ -46,9 +60,11 @@ public class RPCUtils {
 		
 		// TODO - START 
 		
-		if (true)
+		if (str.equals(""))
 			throw new UnsupportedOperationException(TODO.method());
-		
+
+		encoded = str.getBytes(StandardCharsets.UTF_8);
+
 		// TODO - END
 		
 		return encoded;
@@ -61,9 +77,11 @@ public class RPCUtils {
 		
 		// TODO - START 
 		
-		if (true)
+		if (data == null)
 			throw new UnsupportedOperationException(TODO.method());
-		
+
+		decoded = new String(data, StandardCharsets.UTF_8);
+
 		// TODO - END
 		
 		return decoded;
@@ -75,8 +93,7 @@ public class RPCUtils {
 		
 		// TODO - START 
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		encoded = new byte[0];
 				
 		// TODO - END
 		
@@ -88,7 +105,7 @@ public class RPCUtils {
 		
 		// TODO
 		
-		if (true)
+		if (data != null && data.length != 0)
 			throw new UnsupportedOperationException(TODO.method());
 		
 	}
@@ -122,8 +139,12 @@ public class RPCUtils {
 		
 		// TODO - START 
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		encoded = new byte[4];
+
+		encoded[0] = (byte) (x >> 24);
+		encoded[1] = (byte) (x >> 16);
+		encoded[2] = (byte) (x >> 8);
+		encoded[3] = (byte) (x);
 		
 		// TODO - END
 		
@@ -137,9 +158,14 @@ public class RPCUtils {
 		
 		// TODO - START 
 		
-		if (true)
+		if (data == null)
 			throw new UnsupportedOperationException(TODO.method());
-		
+
+		decoded = (decoded << 8) | (data[0] & 0xFF);
+		decoded = (decoded << 8) | (data[1] & 0xFF);
+		decoded = (decoded << 8) | (data[2] & 0xFF);
+		decoded = (decoded << 8) | (data[3] & 0xFF);
+
 		// TODO - END
 		
 		return decoded;

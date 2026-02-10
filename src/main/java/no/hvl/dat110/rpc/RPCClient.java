@@ -3,6 +3,8 @@ package no.hvl.dat110.rpc;
 import no.hvl.dat110.TODO;
 import no.hvl.dat110.messaging.*;
 
+import java.io.IOException;
+
 public class RPCClient {
 
 	// underlying messaging client used for RPC communication
@@ -16,14 +18,16 @@ public class RPCClient {
 		msgclient = new MessagingClient(server,port);
 	}
 	
-	public void connect() {
+	public void connect() throws IOException {
 		
 		// TODO - START
 		// connect using the RPC client
-		//dette er en test på push og pull
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+
+		if (msgclient == null)
+			throw new UnsupportedOperationException("Ingen melding klient.");
+
+		msgclient.connect();
+
 		// TODO - END
 	}
 	
@@ -32,8 +36,10 @@ public class RPCClient {
 		// TODO - START
 		// disconnect by closing the underlying messaging connection
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		if (connection == null)
+			throw new UnsupportedOperationException("Kan ikkje lukkast sidan ingen tilkopling eksisterar.");
+
+		connection.close();
 		
 		// TODO - END
 	}
