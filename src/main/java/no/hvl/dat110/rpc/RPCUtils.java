@@ -61,7 +61,7 @@ public class RPCUtils {
 		// TODO - START 
 		
 		if (str.equals(""))
-			throw new UnsupportedOperationException(TODO.method());
+			throw new UnsupportedOperationException("Strengen er tom.");
 
 		encoded = str.getBytes(StandardCharsets.UTF_8);
 
@@ -78,7 +78,7 @@ public class RPCUtils {
 		// TODO - START 
 		
 		if (data == null)
-			throw new UnsupportedOperationException(TODO.method());
+			throw new UnsupportedOperationException("Kan ikkje gjere ein tom array om til streng.");
 
 		decoded = new String(data, StandardCharsets.UTF_8);
 

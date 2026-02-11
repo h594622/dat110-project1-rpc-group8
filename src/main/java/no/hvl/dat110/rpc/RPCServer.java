@@ -1,11 +1,15 @@
 package no.hvl.dat110.rpc;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import no.hvl.dat110.TODO;
 import no.hvl.dat110.messaging.MessageConnection;
 import no.hvl.dat110.messaging.Message;
 import no.hvl.dat110.messaging.MessagingServer;
+
+import static no.hvl.dat110.rpc.RPCUtils.decapsulate;
+import static no.hvl.dat110.rpc.RPCUtils.encapsulate;
 
 public class RPCServer {
 
@@ -23,7 +27,7 @@ public class RPCServer {
 		
 	}
 	
-	public void run() {
+	public void run() throws IOException {
 		
 		// the stop RPC method is built into the server
 		RPCRemoteImpl rpcstop = new RPCServerStopImpl(RPCCommon.RPIDSTOP,this);
@@ -49,10 +53,29 @@ public class RPCServer {
 		   // - invoke the method and pass the param
 		   // - encapsulate return value 
 		   // - send back the message containing the RPC reply
-			
-		   if (true)
-				throw new UnsupportedOperationException(TODO.method());
-		   
+
+		   requestmsg = connection.receive();
+
+			if (requestmsg == null)
+				throw new UnsupportedOperationException("Ingen melding.");
+
+		   byte[] data = requestmsg.getData();
+
+		   rpcid = (byte)data[0];
+		   byte[] param = decapsulate(data);
+
+			RPCRemoteImpl service = services.get(rpcid);
+			if (service == null)
+				throw new UnsupportedOperationException("Ukjend rpcid: " + rpcid);
+
+			byte[] returnval = service.invoke(param); // kall metoden
+
+			// pakk svar
+			byte[] replyData = encapsulate(rpcid, returnval);
+			replymsg = new Message(replyData);
+
+			connection.send(replymsg);
+
 		   // TODO - END
 
 			// stop the server if it was stop methods that was called

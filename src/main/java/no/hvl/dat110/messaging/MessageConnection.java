@@ -93,7 +93,6 @@ public class MessageConnection {
 			socket.close();
 			
 		} catch (IOException ex) {
-
 			System.out.println("Connection: " + ex.getMessage());
 			ex.printStackTrace();
 		}

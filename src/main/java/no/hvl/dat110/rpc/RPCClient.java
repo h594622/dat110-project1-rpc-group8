@@ -5,6 +5,8 @@ import no.hvl.dat110.messaging.*;
 
 import java.io.IOException;
 
+import static no.hvl.dat110.rpc.RPCUtils.*;
+
 public class RPCClient {
 
 	// underlying messaging client used for RPC communication
@@ -26,7 +28,7 @@ public class RPCClient {
 		if (msgclient == null)
 			throw new UnsupportedOperationException("Ingen melding klient.");
 
-		msgclient.connect();
+		connection = msgclient.connect();
 
 		// TODO - END
 	}
@@ -51,7 +53,7 @@ public class RPCClient {
 	 param is the marshalled parameter of the method to be called
 	 */
 
-	public byte[] call(byte rpcid, byte[] param) {
+	public byte[] call(byte rpcid, byte[] param) throws IOException {
 		
 		byte[] returnval = null;
 		
@@ -65,9 +67,19 @@ public class RPCClient {
 
 		*/
 				
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+		if (param == null)
+			param = marshallVoid();
+
+		byte[] request = encapsulate(rpcid, param);
+
+		Message message = new Message(request);
+
+		connection.send(message);
+
+		Message response = connection.receive();
+
+		returnval = decapsulate(response.getData());
+
 		// TODO - END
 		return returnval;
 		
