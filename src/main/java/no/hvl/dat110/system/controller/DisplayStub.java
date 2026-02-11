@@ -3,20 +3,23 @@ package no.hvl.dat110.system.controller;
 import no.hvl.dat110.TODO;
 import no.hvl.dat110.rpc.*;
 
+import java.io.IOException;
+
 public class DisplayStub extends RPCLocalStub {
 
 	public DisplayStub(RPCClient rpcclient) {
 		super(rpcclient);
 	}
 	
-	public void write (String message) {
+	public void write (String message) throws IOException {
 		
 		// TODO - START
 		
 		// implement marshalling, call and unmarshalling for write RPC method
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+
+		byte[] request = RPCUtils.marshallString(message);
+		byte[] response = rpcclient.call((byte)Common.WRITE_RPCID, request);
+		RPCUtils.unmarshallVoid(response);  // write returns void
 		
 		// TODO - END
 		

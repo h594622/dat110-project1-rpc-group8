@@ -32,7 +32,7 @@ public class MessageConnection {
 	}
 
 	public void send(Message message) throws IOException {
-		System.out.println("Sendar...");
+	//	System.out.println("Sendar...");
 		byte[] data;
 
 		// TODO - START
@@ -55,7 +55,7 @@ public class MessageConnection {
 	}
 
 	public Message receive() {
-		System.out.println("Tek imot...");
+	//	System.out.println("Tek imot...");
 		Message message = null;
 		byte[] data;
 		

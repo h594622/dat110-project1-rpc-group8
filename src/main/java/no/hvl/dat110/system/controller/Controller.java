@@ -4,11 +4,13 @@ import no.hvl.dat110.TODO;
 import no.hvl.dat110.rpc.RPCClient;
 import no.hvl.dat110.rpc.RPCClientStopStub;
 
+import java.io.IOException;
+
 public class Controller  {
 	
 	private static int N = 5;
 	
-	public static void main (String[] args) {
+	public static void main (String[] args) throws IOException {
 		
 		DisplayStub display;
 		SensorStub sensor;
@@ -30,9 +32,20 @@ public class Controller  {
 		// create local display and sensor stub objects
 		// connect to sensor and display RPC servers - using the RPCClients
 		// read value from sensor using RPC and write to display using RPC
-			
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+
+		// create local display and sensor stub objects
+		display = new DisplayStub(displayclient);
+		sensor = new SensorStub(sensorclient);
+
+		// connect RPC clients
+		displayclient.connect();
+		sensorclient.connect();
+
+		// read and write N times
+		for (int i = 0; i < N; i++) {
+			int temp = sensor.read();
+			display.write("Temperature: " + temp);
+		}
 		
 		// TODO - END
 		
