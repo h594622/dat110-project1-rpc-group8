@@ -32,7 +32,6 @@ public class MessageUtils {
 			segment[i+1] = data[i];
 		}
 
-
 		// TODO - END
 		return segment;
 		
@@ -56,7 +55,6 @@ public class MessageUtils {
 		}
 
 		message = new Message(data);
-
 
 		// TODO - END
 		
